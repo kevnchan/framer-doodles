@@ -1,4 +1,4 @@
-var Button, add, bg, btnGroup, button, buttons, decimal, device, divide, eight, equals, expression, five, four, i, j, k, l, m, multiply, n, nine, one, row, seven, six, sub, three, two, zero,
+var Button, add, bg, btnGroup, button, buttons, calculated, decimal, device, display, divide, eight, equals, five, four, i, input, j, k, l, m, multiply, n, nine, one, row, seven, six, sub, three, two, zero,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -25,6 +25,48 @@ btnGroup = new Layer({
   backgroundColor: null
 });
 
+display = new Layer({
+  parent: device,
+  width: device.width,
+  height: device.height - device.width,
+  backgroundColor: null
+});
+
+input = new Layer({
+  parent: display,
+  width: device.width - 18,
+  height: 60,
+  y: 60,
+  backgroundColor: null,
+  color: 'white',
+  opacity: .9,
+  style: {
+    fontFamily: "Roboto Mono",
+    fontWeight: '300',
+    textAlign: 'right',
+    fontSize: '56px'
+  },
+  html: '0'
+});
+
+calculated = new Layer({
+  parent: display,
+  width: input.width - 4,
+  height: 60,
+  y: Align.bottom,
+  backgroundColor: null,
+  color: 'white',
+  opacity: .6,
+  style: {
+    paddingTop: '8px',
+    fontFamily: "Roboto Mono",
+    fontWeight: '400',
+    textAlign: 'right',
+    fontSize: '18px'
+  },
+  html: null
+});
+
 Button = (function(superClass) {
   extend(Button, superClass);
 
@@ -33,8 +75,8 @@ Button = (function(superClass) {
       parent: btnGroup,
       width: device.width / 4,
       height: device.width / 4,
+      color: 'rgba(255, 255, 255, .8)',
       style: {
-        color: 'rgba(255, 255, 255, 0.8)',
         border: 'solid 2px #3B4755',
         textAlign: 'center',
         fontFamily: 'Roboto Mono',
@@ -86,8 +128,6 @@ for (j = k = 0; k <= 3; j = ++k) {
   }
 }
 
-expression = '9 + 12.1';
-
 multiply = buttons[0][0];
 
 multiply.html = '×';
@@ -129,6 +169,14 @@ zero.html = '0';
 for (j = m = 0; m <= 2; j = ++m) {
   for (i = n = 1; n <= 3; i = ++n) {
     buttons[j][i].html = 3 * (2 - j) + i;
+    buttons[j][i].onClick(function() {
+      if (input.html === '0') {
+        input.html = this.html;
+      } else {
+        input.html += this.html;
+      }
+      return calculated.html = eval(input.html);
+    });
   }
 }
 
