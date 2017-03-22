@@ -39,23 +39,28 @@ class Button extends Layer
       @deactivate()
 
   activate: ->
-    @backgroundColor = '#465566'
+    @animate
+      backgroundColor: '#465566'
+      options:
+        time: .2
 
   deactivate: ->
-    @backgroundColor = '#384452'
+    @animate
+      backgroundColor: '#384452'
+      options:
+        time: .2
 
-row1 = []
-row2 = []
-row3 = []
-row4 = []
-buttons = [row1, row2, row3, row4]
+# initialize 2d array of buttons
+buttons = []
 
 for j in [0..3]
+  row = []
+  buttons.push(row)
   for i in [0..3]
     button = new Button
       x: i * 80
       y: j * 80
-    buttons[j].push(button)
+    row.push(button)
 
 expression = '9 + 12.1'
 
@@ -108,3 +113,5 @@ seven = buttons[0][1]
 eight = buttons[0][2]
 
 nine = buttons[0][3]
+
+# can use the eval() function to turn string into numba

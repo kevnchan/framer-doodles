@@ -1,4 +1,4 @@
-var Button, add, bg, btnGroup, button, buttons, decimal, device, divide, eight, equals, expression, five, four, i, j, k, l, m, multiply, n, nine, one, row1, row2, row3, row4, seven, six, sub, three, two, zero,
+var Button, add, bg, btnGroup, button, buttons, decimal, device, divide, eight, equals, expression, five, four, i, j, k, l, m, multiply, n, nine, one, row, seven, six, sub, three, two, zero,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
@@ -51,34 +51,38 @@ Button = (function(superClass) {
   }
 
   Button.prototype.activate = function() {
-    return this.backgroundColor = '#465566';
+    return this.animate({
+      backgroundColor: '#465566',
+      options: {
+        time: .2
+      }
+    });
   };
 
   Button.prototype.deactivate = function() {
-    return this.backgroundColor = '#384452';
+    return this.animate({
+      backgroundColor: '#384452',
+      options: {
+        time: .2
+      }
+    });
   };
 
   return Button;
 
 })(Layer);
 
-row1 = [];
-
-row2 = [];
-
-row3 = [];
-
-row4 = [];
-
-buttons = [row1, row2, row3, row4];
+buttons = [];
 
 for (j = k = 0; k <= 3; j = ++k) {
+  row = [];
+  buttons.push(row);
   for (i = l = 0; l <= 3; i = ++l) {
     button = new Button({
       x: i * 80,
       y: j * 80
     });
-    buttons[j].push(button);
+    row.push(button);
   }
 }
 
